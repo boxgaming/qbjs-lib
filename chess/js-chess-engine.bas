@@ -7,6 +7,7 @@ Dim Shared As Object jsChessEngine, game, state
 Dim Shared lastError As String
 
 Dim s As Object
+'s = Dom.Create("script", document.head)
 $If Javascript Then
     s = document.createElement("script");
     document.head.appendChild(s);
