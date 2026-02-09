@@ -1,6 +1,7 @@
 Option Explicit
-Export NewGame, Move, AIMove, Moves, BoardPieces, FEN
+Export NewGame, Move, AIMove, Moves, SetPiece, RemovePiece, BoardPieces
 Export Turn, IsCheck, IsCheckMate, IsFinished, LastErrorMessage
+Export FEN, History
 
 Dim Shared sloaded As Integer
 Dim Shared As Object jsChessEngine, game, state
@@ -83,6 +84,11 @@ $If Javascript Then
 $End If
 End Function
 
+Sub Move (mstart As String, mend As String)
+    Dim result As Integer
+    result = Move(mstart, mend)
+End Sub
+
 Sub AIMove (level As Integer)
 $If Javascript Then
     game.aiMove(level);
@@ -90,14 +96,93 @@ $If Javascript Then
 $End If
 End Sub
 
-Function FEN
+Function SetPiece (square As String, piece As String)
 $If Javascript Then
-    return game.exportFEN();
+    try {
+        game.setPiece(square, piece);
+        state = game.exportJson();
+        return -1;
+    }
+    catch (e) {
+        lastError = e.message;
+        return 0;
+    }
 $End If
 End Function
 
-Function Turn: Turn = state.turn:  End Function
-Function IsCheck: IsCheck = state.check:  End Function
-Function IsCheckMate: IsCheckMate = state.checkMate:  End Function
-Function IsFinished: IsFinished = state.isFinished:  End Function
-Function LastErrorMessage: LastErrorMessage = lastError: End Function
+Sub SetPiece (square As String, piece As String)
+    Dim result As Integer
+    result = SetPiece(square, piece)
+End Sub
+
+Function RemovePiece (square As String)
+$If Javascript Then
+    try {
+        game.removePiece(square);
+        state = game.exportJson();
+        return -1;
+    }
+    catch (e) {
+        lastError = e.message;
+        return 0;
+    }
+$End If
+End Function
+
+Sub RemovePiece (square As String)
+    Dim result As Integer
+    result = RemovePiece(square)
+End Sub
+
+Function FEN
+$If Javascript Then
+    FEN = game.exportFEN();
+$End If
+End Function
+
+Function LastErrorMessage
+    LastErrorMessage = lastError
+End Function
+
+Function Turn
+    Turn = state.turn
+End Function
+
+Function IsCheck
+$If Javascript Then
+    IsCheck = QB.toBoolean(state.check);
+$End If
+End Function
+
+Function IsCheckMate
+$If Javascript Then
+    IsCheckMate = QB.toBoolean(state.checkMate);
+$End If
+End Function
+
+Function IsFinished
+$If Javascript Then
+     IsFinished = QB.toBoolean(state.isFinished);
+$End If
+End Function
+
+Function History
+    Dim harray As Object
+$If Javascript Then
+    var harray = game.getHistory();
+$End If   
+    Dim hist(harray.length) As Object
+    Dim hobj As Object
+    Dim i As Integer
+$If Javascript Then
+    for (i=0; i < harray.length; i++) {
+        hobj = harray[i];
+$End If
+        hist(i+1).from = hobj.from
+        hist(i+1).to = hobj.to
+        hist(i+1).turn = hobj.configuration.turn
+$If Javascript Then
+    }
+$End If
+    History = hist
+End Function
