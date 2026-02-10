@@ -25,7 +25,7 @@ Pieces are represented by single letter identifiers:
 |P|White Pawn  |p|Black Pawn  |
 
 ## Samples
-Simple Text UI Chess
+[Simple Chess Game with Text UI](https://qbjs.org#src=https://boxgaming.github.io/qbjs-lib/chess/samples/simple-chess-tui.zip)
 
 ## API Reference
 Use the QBJS Import statement to include the library:
