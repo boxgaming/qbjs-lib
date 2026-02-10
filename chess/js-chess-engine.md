@@ -33,7 +33,7 @@ Use the QBJS Import statement to include the library:
 Import Chess From "https://boxgaming.github.io/qbjs-lib/chess/js-chess-engine.bas"
 ```
 
-This will load the API and we can use the following methods to interact with the engine:
+This will load the API and make available the following methods to interact with the engine:
 
 ## AIMove 
 Let the engine make the next move using the specified difficulty level.
@@ -55,6 +55,16 @@ In the standard beginning positions the above would output:
 B1: N
 E8: k
 G5: 
+```
+
+## FEN
+Returns an string representation of the game in Forsyth–Edwards Notation.
+```basic
+Print Chess.FEN
+```
+Example output:
+```
+5Qk1/p3B2p/2pqbp2/3np1p1/1b6/N2P4/PPQ1PPPP/2KR1BNR b - - 0 13
 ```
 
 ## History
@@ -84,6 +94,10 @@ Returns boolean value (-1, 0) indicating whether the current game has reached an
 ```basic
 If Chess.IsFinished Then Print "Game Over!"
 ```
+
+## LastErrorMessage
+Returns a text description of the last error.  
+__See Move code sample below for usage.__
 
 ## Move  
 Move the piece at a given board location to the specified new location.
