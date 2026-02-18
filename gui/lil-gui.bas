@@ -135,6 +135,7 @@ $End If
     Dim s As Object
 $If Javascript Then
     s = document.createElement("script");
+    document.head.appendChild(s);
 $End If
     s.type = "module"
     s.innerText = _
