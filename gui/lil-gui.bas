@@ -1,4 +1,5 @@
-Export Create, Add, AddFolder, Title, Destroy, Hide, Show, Close, Open
+Export Create, Add, AddFolder, Title, Destroy
+Export Hide, Show, Close, Open, OnChange
 Export Name, Options, Disable, Enable, UpdateDisplay
 Option Explicit
 
@@ -57,6 +58,12 @@ $If Javascript Then
 $End If
 End Sub
 
+Sub OnChange (gui, fnCallback)
+$If Javascript Then
+    gui.onChange(fnCallback);
+$End If
+End Sub
+
 Sub Show (element)
 $If Javascript Then
     element.show();
@@ -92,6 +99,7 @@ $If Javascript Then
     controller.updateDisplay();
 $End If
 End Sub
+
 
 Sub Options (controller, optArray())
     If UBound(optArray) < 1 Then Exit Sub
