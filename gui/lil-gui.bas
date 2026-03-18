@@ -1,4 +1,4 @@
-Export Create, Add, AddFolder, Title, Destroy
+Export Create, Add, AddColor, AddFolder, Title, Destroy
 Export Hide, Show, Close, Open, OnChange
 Export Name, Options, Disable, Enable, UpdateDisplay
 Option Explicit
@@ -32,6 +32,17 @@ End Function
 Sub Add (gui, obj, element, min, max, value)
     Dim controller
     controller = Add(gui, obj, element, min, max, value)
+End Sub
+
+Function AddColor (gui, obj, element, value)
+$If Javascript Then
+    return gui.addColor(obj, element, value);
+$End If
+End Function
+
+Sub AddColor (gui, obj, element, value)
+    Dim controller
+    controller = AddColor(gui, obj, element, value)
 End Sub
 
 Function AddFolder (gui, folderName)
